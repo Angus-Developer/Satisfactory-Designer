@@ -2,11 +2,19 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    public Camera cam;
     public float dragSpeed = 2;
+
+    [Header("Zooming")]
+    public float zoomSpeed = 2f;
+    public float minFov = 15f;
+    public float maxFov = 90f;
+
     private Vector3 dragOrigin;
 
     void Update()
-    {
+    {   
+        //Dragging
         if (Input.GetMouseButtonDown(1))
         {
             dragOrigin = Input.mousePosition;
@@ -21,5 +29,8 @@ public class CameraMovement : MonoBehaviour
         transform.Translate(move, Space.World);
 
         dragOrigin = Input.mousePosition;
+
+        //Zooming
+        cam.fieldOfView -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
     }
 }
